@@ -27,4 +27,23 @@ open, after it reaches the time end of the sleep command it will close out of th
 and start the loop over until you reach the amount of loops specified. Each time it will run
 for a rand set time somewhere in specification.
 
+and also i plan to make this all run in the background with chromium and be multi-threaded
+for now it is single thread so i can build this up a little bit.
+
+- I plan to silence the window
+- make it so you dont have to make a user input to start videos by telling command to press space key
+- clean the code a bit
+- make it multi threading capable with a way to select how many processes you start
+- give you more customization as well as setting for such
+- probably will create a user friendly ui that i then put behind a paywall
+- well paywall no but ui maybe / it will depend
+
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000                                           00000000000000000000000
+00000000000000000000000     Tutorial == {LOL NOT POSTED YET}      00000000000000000000000
+00000000000000000000000                                           00000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
 */
