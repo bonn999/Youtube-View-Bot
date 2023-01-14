@@ -35,20 +35,21 @@ void closeW() { // pass command to prompt to kill chrome
 
 int main() {
     string url, ipPath;
-    int min, max, loop;
+    int min, max, loop, sPlay, winM;
     cout << "Enter the url " << endl;
     cin >> url;
     cout << "Enter the minimum time " << endl;
     cin >> min;
     cout << "Enter the maximum time " << endl;
     cin >> max;
-    cout << "From " << min << " to " << max << "selected." << endl;
+    cout << "From " << min << " to " << max << " selected." << endl;
     cout << "Enter path to the ip list to use " << endl;
     cin >> ipPath;
     cout << "Enter the amout of loops/views " << endl;
     cin >> loop;
-    int winM;
-    cout << "Do you wish to minimize the window after it opens?" << endl << endl << "Yes = 1 No = 0";
+    cout << "Do you need to send a input to automatically start the video? " << endl << endl << "Yes = 1 No = 0 ";
+    cin >> sPlay;
+    cout << "Do you wish to minimize the window after it opens?" << endl << endl << "Yes = 1 No = 0 ";
     cin >> winM;
     cout << endl << endl;
     vector<string> IPs;
@@ -70,21 +71,22 @@ int main() {
             break;
         }
         string newIP = IPs.back();
-        IPs.pop_back(); // this will change the internet settings   interface used                       ip from list     mask        gateway   ---- You can chage whatever you want here
-        string command = "netsh interface ipv4 set address name=\"Local Area Connection\" source=static " + newIP + " 255.255.255.0 192.168.1.1";
+        IPs.pop_back(); // this will change the internet settings   interface used                          ip from list     mask        gateway   ---- You can chage whatever you want here
+        string command = "netsh interface ipv4 set address name=\"Interface Area Connection\" source=static " + newIP + " 255.255.255.0 192.168.1.1";
         system(command.c_str()); // just remember line 92 is to reset your settings back to original, be sure to run program all the way through or you will have to manually reset
         openW(url); //              your internet settings, if you have to manually reset use commands in line 92 to do so
-        start();
+        if (sPlay > 0) {
+            start();
+        }
         if (winM > 0) {
             MinW();
-            break;
         }
         int random = rand() % (max - min + 1) + min;
         std::this_thread::sleep_for(std::chrono::seconds(random));
         closeW();
     }
-                  // resets your original settings            place original interface                 original IP,      Mask       Gateway
-    string command2 = "netsh interface ipv4 set address name=\"Local Area Connection\" source=static 'Place Ip here' 255.255.255.0 192.168.1.1";
+                  // resets your original settings              place original interface                 original IP,      Mask       Gateway
+    string command2 = "netsh interface ipv4 set address name=\"Interface Area Connection\" source=static 'Original Ip' 255.255.255.0 192.168.1.1";
     system(command2.c_str()); // if you were using DHCP and want that back on use command "netsh interface ipv4 set address name=\"Local Area Connection\" source=dhcp"
     return main();
 }

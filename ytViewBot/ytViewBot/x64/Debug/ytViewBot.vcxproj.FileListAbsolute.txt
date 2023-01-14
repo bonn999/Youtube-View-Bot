@@ -1,2 +1,0 @@
-C:\Users\wedie\source\repos\ytViewBot\x64\Debug\ytViewBot.exe.lastcodeanalysissucceeded
-C:\Users\wedie\source\repos\ytViewBot\ytViewBot\x64\Debug\NativeCodeAnalysis.read.1.tlog
