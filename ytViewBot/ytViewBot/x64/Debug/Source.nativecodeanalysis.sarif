@@ -20,13 +20,13 @@
       "artifacts": [
         {
           "location": {
-            "uri": "file:///c:/users/wedie/source/repos/ytviewbot/ytviewbot/source.cpp"
+            "uri": "file:///c:/users/wedie/onedrive/desktop/youtube-view-bot-main/ytviewbot/ytviewbot/source.cpp"
           },
           "roles": [
             "analysisTarget"
           ],
           "hashes": {
-            "sha-256": "95b53908ab5c272407d3d4184dcfe34360922ed20faed5ae64bbc0d2b07ca1d3"
+            "sha-256": "99a84cef575c68e21ae245f1a764832d356e9921b7779864899fa3d72d560303"
           }
         }
       ]

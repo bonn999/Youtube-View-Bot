@@ -9,24 +9,26 @@
 using namespace std;
 
 void openW(string url) { // import string url then pass command in prompt window to start chrome
-    string command = "start /B chrome.exe " + url;
+    string command = "start chrome.exe " + url;
     system(command.c_str());
+
 }
 
-void start() { // sleep for 2 seconds and press the space bar to start the video
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    INPUT input;
-    input.type = INPUT_KEYBOARD;
-    input.ki.wVk = VK_SPACE;
-    input.ki.dwFlags = 0;
-    SendInput(1, &input, sizeof(INPUT));
+void openWM(string url) {
+    string command3 = "start /min chrome.exe " + url;
+    system(command3.c_str());
 }
 
-void MinW() { // pass keyboard events to window to minimize window
-    keybd_event(VK_LWIN, 0x5B, 0, 0);
-    keybd_event(VK_DOWN, 0x28, 0, 0);
-    keybd_event(VK_LWIN, 0x5B, KEYEVENTF_KEYUP, 0);
-    keybd_event(VK_DOWN, 0x28, KEYEVENTF_KEYUP, 0);
+void startVid() {
+    this_thread::sleep_for(std::chrono::seconds(2));
+    INPUT input[2];
+    input[0].type = INPUT_KEYBOARD;
+    input[0].ki.wVk = VK_SPACE;
+    input[0].ki.dwFlags = 0;
+    input[1].type = INPUT_KEYBOARD;
+    input[1].ki.wVk = VK_SPACE;
+    input[1].ki.dwFlags = KEYEVENTF_KEYUP;
+    SendInput(2, input, sizeof(INPUT));
 }
 
 void closeW() { // pass command to prompt to kill chrome
@@ -34,8 +36,10 @@ void closeW() { // pass command to prompt to kill chrome
 }
 
 int main() {
+
     string url, ipPath;
-    int min, max, loop, sPlay, winM;
+    int min, max, loop;
+    char startV, shortW;
     cout << "Enter the url " << endl;
     cin >> url;
     cout << "Enter the minimum time " << endl;
@@ -47,10 +51,10 @@ int main() {
     cin >> ipPath;
     cout << "Enter the amout of loops/views " << endl;
     cin >> loop;
-    cout << "Do you need to send a input to automatically start the video? " << endl << endl << "Yes = 1 No = 0 ";
-    cin >> sPlay;
-    cout << "Do you wish to minimize the window after it opens?" << endl << endl << "Yes = 1 No = 0 ";
-    cin >> winM;
+    cout << "Do you need to send a input to automatically start the video? " << endl << endl << "Note that this will send the keyStroke (SPACE BAR) to the window to start the video" << endl << "    y/n ";
+    cin >> startV;
+    cout << "Do you wish to minimize the window after it opens?" << endl << endl << "Note that this may only work if the window is not minimized." << endl << "    y/n ";
+    cin >> shortW;
     cout << endl << endl;
     vector<string> IPs;
     ifstream file(ipPath);
@@ -74,19 +78,25 @@ int main() {
         IPs.pop_back(); // this will change the internet settings   interface used                          ip from list     mask        gateway   ---- You can chage whatever you want here
         string command = "netsh interface ipv4 set address name=\"Interface Area Connection\" source=static " + newIP + " 255.255.255.0 192.168.1.1";
         system(command.c_str()); // just remember line 92 is to reset your settings back to original, be sure to run program all the way through or you will have to manually reset
-        openW(url); //              your internet settings, if you have to manually reset use commands in line 92 to do so
-        if (sPlay > 0) {
-            start();
+        if (startV == 'y') { //     your internet settings, if you have to manually reset use commands in line 92 to do so
+            startVid();
         }
-        if (winM > 0) {
-            MinW();
+        if (shortW == 'y') {
+            openWM(url);
+            int random = rand() % (max - min + 1) + min;
+            std::this_thread::sleep_for(std::chrono::seconds(random));
+            closeW();
         }
-        int random = rand() % (max - min + 1) + min;
-        std::this_thread::sleep_for(std::chrono::seconds(random));
-        closeW();
+        if(shortW == 'n') {
+            openW(url);
+            int random = rand() % (max - min + 1) + min;
+            std::this_thread::sleep_for(std::chrono::seconds(random));
+            closeW();
+        }
+
     }
                   // resets your original settings              place original interface                 original IP,      Mask       Gateway
-    string command2 = "netsh interface ipv4 set address name=\"Interface Area Connection\" source=static 'Original Ip' 255.255.255.0 192.168.1.1";
+    string command2 = "netsh interface ipv4 set address name=\"Interface Area Connection\" source=static 'Original IP' 255.255.255.0 192.168.1.1";
     system(command2.c_str()); // if you were using DHCP and want that back on use command "netsh interface ipv4 set address name=\"Local Area Connection\" source=dhcp"
     return main();
 }
